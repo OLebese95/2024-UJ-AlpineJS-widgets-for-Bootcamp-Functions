@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine.js Greet Widget</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {   
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        p {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Greet Widget</h1>
+        <div x-data="greetFunction()">
+            <input type="text" x-model="name" placeholder="Enter your name">
+            <select x-model="currentLanguage">
+                <template x-for="language in languages">
+                    <option x-text="language"></option>
+                </template>
+            </select>
+            <button @click="greet">Greet</button>
+            <p x-text="greeting"></p>
+        </div>
+
+        <h1>Transport Fee Widget</h1>
+        <div x-data="transportFunction()">
+            <div class="radio-group">
+                <label>
+                    <input type="radio" x-model="shift" value="morning"> Morning Shift 
+                </label><br>
+                <label>
+                    <input type="radio" x-model="shift" value="afternoon"> Afternoon Shift 
+                </label><br>
+                <label>
+                    <input type="radio" x-model="shift" value="nightshift"> Night Shift 
+                </label><br>
+            </div>
+            <button @click="showFee">Show Fee</button>
+            <p x-text="fee"></p>
+        </div>
+
+
+        <h1>Total Phone Bill Widget</h1>
+        <div x-data="phoneBillFunction()">
+            <label for="balance">What is your initial balance?</label><br>
+            <input type="number" x-model="initialBalance" id="balance"><br>
+            <label for="phoneBill">Did you call or send sms?</label><br>
+            <input type="text" x-model="phoneBill" id="phoneBill"><br>
+            <button @click="calculateBill">Calculate Bill</button>
+            <p>Total Bill: <span x-text="totalBill"></span></p>
+            <p>Remaining Balance: <span x-text="remainingBalance"></span></p>
+        </div>
+
+
+        <h1>Expensive Items Widget</h1>
+        <div x-data="expensiveItemsFunction()">
+            <h2>Create Fruits Data</h2>
+            <label for="name">Enter fruit name:</label>
+            <input type="text" x-model="name" id="name"><br>
+            <label for="qty">Quantity:</label>
+            <input type="number" x-model="qty" id="qty"><br>
+            <button @click="addItem">Add Fruit</button>
+            <h3>Fruit List:</h3>
+            <ul>
+                <template x-for="item in items" :key="item.name">
+                    <li x-text="item.name + ': ' + item.qty"></li>
+                </template>
+            </ul>
+            <button @click="findItemsOver20">Find items over 20</button>
+            <button @click="findItemsOverThreshold">Or find items over:</button>
+            <input type="number" x-model="threshold" placeholder="set any number">
+            <div x-show="over20Results.length > 0" class="result">
+                <h3>Items Over 20:</h3>
+                <ul>
+                    <template x-for="result in over20Results" :key="result.name">
+                        <li x-text="result.name + ': ' + result.qty"></li>
+                    </template>
+                </ul>
+            </div>
+            <div x-show="thresholdResults.length > 0" class="result">
+                <h3>Items Over Threshold:</h3>
+                <ul>
+                    <template x-for="result in thresholdResults" :key="result.name">
+                        <li x-text="result.name + ': ' + result.qty"></li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+
+
+        <script src="./totalPhoneBill.js"></script>
+        <script src="./greet.js"></script>
+        <script src="./transportFee.js"></script>
+        <script src="./findItemsOver.js"></script>
+    </div>
+</body>
+</html>
+
